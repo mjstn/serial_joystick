@@ -13,7 +13,7 @@ in the future buttons will be mapped to the /joy 'buttons' array as 1 for presse
 The default /cmd_vel topic and speeds may be changed using parameters
 Release of the joystick causes velocity in all modes to go back to 0
 
-Configuration is done in:  catkin_ws/src/demos/serial_joystick/serial_joystick.yaml
+Configuration is done in:  param/serial_joystick.yaml
 The serial device must use the protocol coded into this node.
 
 This node can thus be modified to access other forms of serial joystick devices with little effort.
@@ -54,5 +54,9 @@ Next run the node from catkin_ws:   catkin_ws> roslaunch serial_joystick serial_
 To run the node without ROS launch or the yaml config file you can run from where the script is:
 python nodes/serial_joystick.py /dev/ttyUSB0
 
-System Limitations (beside having ROS environment and bt_joystick node configured)
-Must have the serial device set in serial_joystick.yaml
+# The default serial protocol
+A very simple protocol is done to talk to a custom Mark-Toys.com board I call the USB Multi-Port .
+Because the USB to serial is on this small dongle board and the M0 processor that reads the analog lines is less than a centimeter away I have not implemented any checksums or packets to get joystick over serial.  If this code is modified to use some custom joystick that goes over real wires to some other little processor I strongly suggest you worry about the integrity of the bits.  
+
+The custom ARM M0 on the USB Multi-Port board requires this node send  :V;   where : means a command is starting. V is the command to read back two voltages in a simple    xxx,yyy form both integers from 0-4095.  The code subtracts off 2048 and presto the code has a signed integer.  
+
