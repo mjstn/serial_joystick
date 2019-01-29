@@ -1,0 +1,5 @@
+<launch>
+    <node pkg="serial_joystick" type="serial_joystick.py" name="serial_joystick" output="screen">
+	<rosparam file="$(find serial_joystick)/param/serial_joystick.yaml"/>
+    </node>
+</launch>
