@@ -23,7 +23,7 @@ This node can thus be modified to access other forms of serial joystick devices 
     ROS Param            Default  Description
     serial_device           xx    Serial device such as /dev/ttyUSB0
     output_to_joy           1     Output control messages to the /joy ROS topic using Joy messages
-    output_to_cmd_vel       0     Output control messages to the /cmd_vel ROS topic using twist messages
+    output_to_cmd_vel       0     Output control messages to the /cmd_vel_joy ROS topic using twist messages
     speed_stopped           0.0   Robot X speed when stopped (can be used to null out robot offset)
     speed_fwd_normal        0.2   Robot forward X speed in M/Sec for joystick forward straight
     speed_fwd_inc           0.05  Increment in M/Sec for a speed increment
@@ -35,10 +35,15 @@ This node can thus be modified to access other forms of serial joystick devices 
     angular_rotate_inc      0.1   Increment in ad/Sec for a rotate increment
     angular_rotate_max      2.0   Max Robot Z angular rate in Rad/Sec
 
+We set the default topic for output to /joy but in some systems you may wish to output to /cmd_vel topic
+so for those systems set  output_to_joy to 0 and set output_to_cmd_vel to 1.
+If you want direct output to /cmd_vel you will have to find  '/cmd_vel_joy' in the script and modify to '/cmd_vel'
+
 # Install This Node
 
     cd ~/catkin_ws/src
     git clone https://github.com/mjstn/serial_joystick.git
+    chmod 775 nodes/serial_joystick.py
     catkin_make
 
 # To run this node when the ROS master node is running
